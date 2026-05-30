@@ -79,6 +79,45 @@
   background: rgba(201, 162, 39, 0.06);
 }
 
+.bw-header__profile {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 0.5rem;
+  padding: 0.45rem 0.85rem;
+  font-family: var(--bw-font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: capitalize;
+  color: var(--bw-gold);
+  text-decoration: none;
+  border: 1px solid var(--bw-border);
+  background: rgba(201, 162, 39, 0.08);
+  transition: color 0.2s, border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.bw-header__profile:hover {
+  color: #e8d48a;
+  background: rgba(201, 162, 39, 0.14);
+  box-shadow: 0 0 16px rgba(201, 162, 39, 0.2);
+}
+
+.bw-header__profile--active {
+  border-color: var(--bw-gold);
+  background: rgba(201, 162, 39, 0.12);
+}
+
+.bw-header__profile-icon {
+  flex-shrink: 0;
+}
+
+.bw-header__user-name {
+  max-width: 8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 /* Page shell */
 .bw-page {
   position: relative;

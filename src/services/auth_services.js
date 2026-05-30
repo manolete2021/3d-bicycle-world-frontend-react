@@ -18,7 +18,7 @@ export async function signIn({ email, password }) {
     data = {};
   }
 
-  if (!response.ok) {
+  if (response.status !== 200 && response.status !== 201) {
     const message =
       data.message ||
       data.error ||

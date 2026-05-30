@@ -1,23 +1,31 @@
 import { useState } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import PageLayout from '../components/PageLayout';
+import { ROUTES } from '../config/routes';
+import { useAuth } from '../context/AuthContext';
 import { signIn } from '../services/auth_services';
 
 function SignIn() {
+  const navigate = useNavigate();
+  const { login, isAuthenticated } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+
+  if (isAuthenticated) {
+    return <Navigate to={ROUTES.home} replace />;
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
     setError('');
-    setSuccess('');
     setLoading(true);
 
     try {
-      await signIn({ email, password });
-      setSuccess('Signed in successfully.');
+      const data = await signIn({ email, password });
+      login(data);
+      navigate(ROUTES.home, { replace: true });
     } catch (err) {
       setError(err.message || 'Sign in failed.');
     } finally {
@@ -65,11 +73,6 @@ function SignIn() {
           {error && (
             <p className="bw-auth-message bw-auth-message--error" role="alert">
               {error}
-            </p>
-          )}
-          {success && (
-            <p className="bw-auth-message bw-auth-message--success" role="status">
-              {success}
             </p>
           )}
 
