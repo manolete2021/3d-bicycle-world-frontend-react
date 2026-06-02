@@ -1,3 +1,4 @@
+// Route paths used across the app.
 export const ROUTES = {
     home: '/',
     products: '/products',
@@ -5,11 +6,14 @@ export const ROUTES = {
     contact: '/contact',
     login: '/login',
     sign_in: '/sign_in',
+    sign_up: '/sign_up',
+    forgot_password: '/forgot_password',
     logout: '/logout',
     register: '/register',
     profile: '/profile',
         
 }
+// Menu links shown in the header.
 export const menuItems = [
     {
         key: 'home',
@@ -24,11 +28,13 @@ export const menuItems = [
         icon: 'products',
     },
     {
+        key: 'about',
         name: 'About',
         path: ROUTES.about,
         icon: 'about',
     },
     {
+        key: 'contact',
         name: 'Contact',
         path: ROUTES.contact,
         icon: 'contact',
@@ -38,5 +44,11 @@ export const menuItems = [
         name: 'Sign In',
         path: ROUTES.sign_in,
         icon: 'sign_in',
+    },
+    {
+        key: 'sign_up',
+        name: 'Sign Up',
+        path: ROUTES.sign_up,
+        icon: 'sign_up',
     },
 ]

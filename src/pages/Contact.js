@@ -2,23 +2,28 @@ import { useState } from 'react';
 import PageLayout from '../components/PageLayout';
 import { bicycleTypes } from '../data/bicycleTypes';
 
+// Contact page with form and dynamic bicycle preview.
 function Contact() {
+  // Track selected bicycle interest in the form.
   const [interest, setInterest] = useState(bicycleTypes[0].id);
 
+  // Resolve selected bicycle data for accent and preview.
   const selected = bicycleTypes.find((b) => b.id === interest) || bicycleTypes[0];
 
   return (
     <PageLayout accent={selected.accent} accentGlow={selected.accentGlow}>
-      <header className="bw-hero mb-10">
+      <header className="bw-hero bw-hero--page">
         <span className="bw-eyebrow">Write to Us</span>
-        <h1 className="bw-display bw-hero__title">Contact the Realm</h1>
-        <p className="bw-lead max-w-2xl mx-auto">
-          Tell us which discipline calls to you. The mood of this chamber shifts
-          with the accent of the bicycle you choose.
+        <h1 className="bw-hero__title bw-hero__title--neon">Contact</h1>
+        <p className="bw-lead bw-lead--center">
+          Tell us which discipline calls to you. Pick a bicycle type and we will
+          match your inquiry to the right team.
         </p>
       </header>
 
+      {/* Two-column layout: contact info and form */}
       <div className="bw-contact-wrap">
+        {/* Static support information and live bicycle preview */}
         <aside className="bw-contact-info">
           <h3>Cyclist Support</h3>
           <p>
@@ -46,6 +51,7 @@ function Contact() {
           </div>
         </aside>
 
+        {/* Contact form (currently prevents default submit) */}
         <form
           className="bw-form-panel"
           onSubmit={(e) => {

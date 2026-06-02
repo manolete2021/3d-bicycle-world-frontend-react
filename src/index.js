@@ -5,7 +5,9 @@ import './styles/bicycleWorld.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// Create the React root node from the HTML container.
 const root = ReactDOM.createRoot(document.getElementById('root'));
+// Render the full application in strict mode.
 root.render(
   <React.StrictMode>
     <App />

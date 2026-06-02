@@ -1,23 +1,26 @@
 import PageLayout from '../components/PageLayout';
 import { bicycleTypes, formatPriceAud } from '../data/bicycleTypes';
 
+// Products page with full details and price for each bicycle.
 function Products() {
   return (
-    <PageLayout accent="#6b8cae" accentGlow="rgba(107, 140, 174, 0.28)">
-      <header className="bw-hero">
+    <PageLayout>
+      <header className="bw-hero bw-hero--page">
         <span className="bw-eyebrow">Shop</span>
-        <h1 className="bw-display bw-hero__title">Bicycles for Sale</h1>
-        <p className="bw-lead max-w-2xl mx-auto">
+        <h1 className="bw-hero__title bw-hero__title--neon">Bicycles for Sale</h1>
+        <p className="bw-lead bw-lead--center">
           Every model below will be available in the realm. Browse by name and
           type, read the full description, and see prices in Australian dollars.
         </p>
       </header>
 
+      {/* List of products available in the catalog */}
       <section aria-labelledby="products-heading">
-        <h2 id="products-heading" className="bw-display bw-section__title mb-8">
+        <h2 id="products-heading" className="bw-section__title bw-section__title--spaced-lg">
           Available Lineages
         </h2>
         <ul className="bw-products">
+          {/* Render each bicycle as a product item */}
           {bicycleTypes.map((bike) => (
             <li
               key={bike.id}
@@ -27,6 +30,7 @@ function Products() {
                 '--product-glow': bike.accentGlow,
               }}
             >
+              {/* Product image and status badge */}
               <div className="bw-product__media">
                 <img
                   src={bike.image}
@@ -36,6 +40,7 @@ function Products() {
                 />
                 <span className="bw-product__badge">For sale</span>
               </div>
+              {/* Product text information and formatted price */}
               <div className="bw-product__info">
                 <h3 className="bw-product__name">{bike.name}</h3>
                 <p className="bw-product__type">

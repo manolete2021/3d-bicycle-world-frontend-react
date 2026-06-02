@@ -1,4 +1,9 @@
-function PageLayout({ accent = '#c9a227', accentGlow = 'rgba(201, 162, 39, 0.2)', children }) {
+// Reusable page wrapper with neon accent defaults from the reference design.
+function PageLayout({
+  accent = '#22d3ee',
+  accentGlow = 'rgba(34, 211, 238, 0.22)',
+  children,
+}) {
   return (
     <main
       className="bw-page"

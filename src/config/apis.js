@@ -1,6 +1,8 @@
+// Base URL for backend API.
 export const API_URL = 'https://backend-3d-bicycle-world-users.onrender.com';
 
 
+// API endpoints grouped by auth action.
 export const apiEndpoints = {
     login: `${API_URL}/api/v1/sign_in`,
     register: `${API_URL}/api/v1/sign_up`,

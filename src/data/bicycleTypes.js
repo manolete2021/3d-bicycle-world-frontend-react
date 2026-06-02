@@ -1,3 +1,4 @@
+// Static bicycle catalog used by multiple pages.
 export const bicycleTypes = [
   {
     id: 'road',
@@ -73,6 +74,7 @@ export const bicycleTypes = [
   },
 ];
 
+// Format numeric amount to AUD currency string.
 export function formatPriceAud(amount) {
   return new Intl.NumberFormat('en-AU', {
     style: 'currency',

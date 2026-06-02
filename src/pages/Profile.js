@@ -3,22 +3,25 @@ import PageLayout from '../components/PageLayout';
 import { ROUTES } from '../config/routes';
 import { useAuth } from '../context/AuthContext';
 
+// Profile page for logged-in user information.
 function Profile() {
   const { user, isAuthenticated } = useAuth();
 
   if (!isAuthenticated) {
+    // Protect this route: send guests to sign-in page.
     return <Navigate to={ROUTES.sign_in} replace />;
   }
 
   return (
-    <PageLayout accent="#6b8cae" accentGlow="rgba(107, 140, 174, 0.28)">
-      <header className="bw-hero">
+    <PageLayout>
+      <header className="bw-hero bw-hero--page">
         <span className="bw-eyebrow">Account</span>
-        <h1 className="bw-display bw-hero__title">Profile</h1>
-        <p className="bw-lead max-w-2xl mx-auto">
-          Welcome back, {user.user_name}. Your session is active in the realm.
+        <h1 className="bw-hero__title bw-hero__title--neon">Profile</h1>
+        <p className="bw-lead bw-lead--center">
+          Welcome back, {user.user_name}. Your session is active.
         </p>
       </header>
+      {/* Basic account details */}
       <div className="bw-about-block">
         <div className="bw-prose">
           <p>

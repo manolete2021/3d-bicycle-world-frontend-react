@@ -10,10 +10,10 @@
 
 body {
   margin: 0;
-  background: #334d68;
-  color: #e8e4dc;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 18px;
+  background: #06080c;
+  color: #ffffff;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 16px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

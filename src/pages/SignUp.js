@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { ROUTES } from '../config/routes';
 import { useAuth } from '../context/AuthContext';
-import { signIn } from '../services/auth_services';
+import { signUp } from '../services/auth_services';
 
 function BackHomeIcon() {
   return (
@@ -19,10 +19,11 @@ function BackHomeIcon() {
   );
 }
 
-// Sign-in page styled to match the reference login design.
-function SignIn() {
+// Sign-up page styled to match the reference create-account design.
+function SignUp() {
   const navigate = useNavigate();
   const { login, isAuthenticated } = useAuth();
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -38,11 +39,15 @@ function SignIn() {
     setLoading(true);
 
     try {
-      const data = await signIn({ email, password });
-      login(data);
-      navigate(ROUTES.home, { replace: true });
+      const data = await signUp({ name, email, password });
+      if (data?.user?.token) {
+        login(data);
+        navigate(ROUTES.home, { replace: true });
+      } else {
+        navigate(ROUTES.sign_in, { replace: true });
+      }
     } catch (err) {
-      setError(err.message || 'Sign in failed.');
+      setError(err.message || 'Sign up failed.');
     } finally {
       setLoading(false);
     }
@@ -57,17 +62,28 @@ function SignIn() {
       <div className="bw-login-page__center">
         <div className="bw-login-card">
           <header className="bw-login-card__header">
-            <h1 className="bw-login-card__title">Welcome Back</h1>
-            <p className="bw-login-card__subtitle">
-              Log in to continue exploring 3D Bicycle World.
-            </p>
+            <h1 className="bw-login-card__title">Create Account</h1>
+            <p className="bw-login-card__subtitle">Create your new user profile.</p>
           </header>
 
           <form className="bw-login-form" onSubmit={handleSubmit}>
             <div className="bw-login-field">
-              <label htmlFor="sign-in-email">Email</label>
+              <label htmlFor="sign-up-name">Nombre</label>
               <input
-                id="sign-in-email"
+                id="sign-up-name"
+                name="name"
+                type="text"
+                autoComplete="name"
+                placeholder="Tu nombre"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="bw-login-field">
+              <label htmlFor="sign-up-email">Email</label>
+              <input
+                id="sign-up-email"
                 name="email"
                 type="email"
                 autoComplete="email"
@@ -78,12 +94,12 @@ function SignIn() {
               />
             </div>
             <div className="bw-login-field">
-              <label htmlFor="sign-in-password">Password</label>
+              <label htmlFor="sign-up-password">Password</label>
               <input
-                id="sign-in-password"
+                id="sign-up-password"
                 name="password"
                 type="password"
-                autoComplete="current-password"
+                autoComplete="new-password"
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -97,14 +113,17 @@ function SignIn() {
               </p>
             )}
 
-            <button type="submit" className="bw-login-form__submit" disabled={loading}>
-              {loading ? 'Signing in…' : 'Login'}
+            <button
+              type="submit"
+              className="bw-login-form__submit bw-login-form__submit--signup"
+              disabled={loading}
+            >
+              {loading ? 'Signing up…' : 'Sign up'}
             </button>
           </form>
 
-          <nav className="bw-login-card__links" aria-label="Login help">
-            <Link to={ROUTES.forgot_password}>Forgot password?</Link>
-            <Link to={ROUTES.sign_up}>Create account</Link>
+          <nav className="bw-login-card__links bw-login-card__links--pair" aria-label="Sign up help">
+            <Link to={ROUTES.sign_in}>Back to login</Link>
             <Link to={ROUTES.home}>Back to home</Link>
           </nav>
         </div>
@@ -113,4 +132,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default SignUp;

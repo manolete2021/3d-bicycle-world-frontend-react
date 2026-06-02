@@ -1,26 +1,29 @@
 import PageLayout from '../components/PageLayout';
-import BicycleCard from '../components/BicycleCard';
+import BicycleSlider3D from '../components/BicycleSlider3D';
+import CategoryCard from '../components/CategoryCard';
 import { bicycleTypes } from '../data/bicycleTypes';
 
+// Home page with neon hero, 3D slider, and bike category grid.
 function Home() {
   return (
-    <PageLayout accent="#c9a227" accentGlow="rgba(201, 162, 39, 0.2)">
-      <header className="bw-hero">
-        <span className="bw-eyebrow">3D Bicycle World</span>
-        <h1 className="bw-display bw-hero__title">Realm of Two Wheels</h1>
-        <p className="bw-lead max-w-2xl mx-auto">
-          Explore six bicycle lineages forged between gothic shadow and accent
-          light. Each discipline carries its own color, its ritual, and its path.
+    <PageLayout>
+      <header className="bw-hero bw-hero--home">
+        <div className="bw-hero__stage">
+          <h1 className="bw-hero__title bw-hero__title--neon">BICYCLES WORLD</h1>
+          <BicycleSlider3D />
+        </div>
+        <p className="bw-hero__caption">
+          3D Slider / HTML + CSS only, rotating in an infinite loop.
         </p>
       </header>
 
-      <section aria-labelledby="catalog-heading">
-        <h2 id="catalog-heading" className="bw-display bw-section__title mb-8">
-          Discipline Catalog
+      <section className="bw-categories" aria-labelledby="categories-heading">
+        <h2 id="categories-heading" className="bw-section__title">
+          Bike Categories
         </h2>
-        <div className="bw-grid bw-grid--featured">
+        <div className="bw-grid bw-grid--categories">
           {bicycleTypes.map((bike) => (
-            <BicycleCard key={bike.id} bike={bike} />
+            <CategoryCard key={bike.id} bike={bike} />
           ))}
         </div>
       </section>
