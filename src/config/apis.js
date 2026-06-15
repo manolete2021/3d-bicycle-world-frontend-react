@@ -1,7 +1,5 @@
-// Base URL/dominio for backend API.
-export const API_URL = 'https://backend-3d-bicycle-world-users.onrender.com';
-// url local localhost:5000
-//export const API_URL = 'http://localhost:5000';
+// Base URL for backend API. Set REACT_APP_API_URL in Vercel (or .env.local for local dev).
+export const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 // API endpoints grouped by auth action.
 export const apiEndpoints = {
