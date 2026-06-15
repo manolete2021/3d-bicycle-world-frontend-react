@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import ConfirmModal from './ConfirmModal';
 import { menuItems, ROUTES } from '../config/routes';
 import { useAuth } from '../context/AuthContext';
+import { useAuthAlert } from '../context/AuthAlertContext';
 import { signOut } from '../services/auth_services';
 
 function ProfileIcon() {
@@ -27,7 +29,10 @@ const AUTH_KEYS = new Set(['sign_in', 'sign_up']);
 function Header() {
   const navigate = useNavigate();
   const { user, isAuthenticated, logout } = useAuth();
+  const { showAuthAlert } = useAuthAlert();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [signOutModalOpen, setSignOutModalOpen] = useState(false);
+  const [signingOut, setSigningOut] = useState(false);
   const menuRef = useRef(null);
 
   const navItems = menuItems.filter((item) => !AUTH_KEYS.has(item.key));
@@ -55,17 +60,40 @@ function Header() {
     };
   }, [menuOpen]);
 
-  async function handleSignOut() {
+  function handleSignOutClick() {
     setMenuOpen(false);
+    setSignOutModalOpen(true);
+  }
+
+  function handleSignOutCancel() {
+    setSignOutModalOpen(false);
+  }
+
+  async function handleSignOutConfirm() {
+    setSigningOut(true);
 
     try {
       if (user?.token) {
-        await signOut({ token: user.token });
+        const data = await signOut({ token: user.token });
+        showAuthAlert({
+          variant: 'success',
+          message: data.message || 'Signed out successfully.',
+        });
+      } else {
+        showAuthAlert({
+          variant: 'success',
+          message: 'Signed out successfully.',
+        });
       }
-    } catch {
-      // Clear local session even if API sign-out fails.
+    } catch (err) {
+      showAuthAlert({
+        variant: 'danger',
+        message: err.message || 'Sign out failed. Please try again.',
+      });
     } finally {
       logout();
+      setSignOutModalOpen(false);
+      setSigningOut(false);
       navigate(ROUTES.home);
     }
   }
@@ -138,7 +166,7 @@ function Header() {
                       type="button"
                       role="menuitem"
                       className="bw-header__dropdown-item bw-header__dropdown-item--action"
-                      onClick={handleSignOut}
+                      onClick={handleSignOutClick}
                     >
                       Sign Out
                     </button>
@@ -149,6 +177,17 @@ function Header() {
           )}
         </div>
       </div>
+
+      <ConfirmModal
+        isOpen={signOutModalOpen}
+        title="Sign Out"
+        message="Are you sure you want to sign out?"
+        confirmLabel="Sign Out"
+        cancelLabel="Cancel"
+        onConfirm={handleSignOutConfirm}
+        onCancel={handleSignOutCancel}
+        loading={signingOut}
+      />
     </header>
   );
 }

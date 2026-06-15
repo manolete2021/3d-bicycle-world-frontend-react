@@ -20,13 +20,16 @@ export async function signIn({ email, password }) {
     data = {};
   }
 
+  if (response.status === 400 || response.status === 500) {
+    const message = data.message ;
+    throw new Error(message);
+  }
+
   if (response.status !== 200 && response.status !== 201) {
-    // Build a readable error message using API payload if available.
     const message =
       data.message ||
       data.error ||
-      (Array.isArray(data.errors) ? data.errors.join(', ') : null) ||
-      'Sign in failed. Please check your email and password.';
+      (Array.isArray(data.errors) ? data.errors.join(', ') : null);
     throw new Error(message);
   }
 

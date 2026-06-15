@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { ROUTES } from '../config/routes';
 import { useAuth } from '../context/AuthContext';
+import { useAuthAlert } from '../context/AuthAlertContext';
 import { signUp } from '../services/auth_services';
 
 function BackHomeIcon() {
@@ -23,6 +24,7 @@ function BackHomeIcon() {
 function SignUp() {
   const navigate = useNavigate();
   const { login, isAuthenticated } = useAuth();
+  const { showAuthAlert } = useAuthAlert();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -42,12 +44,19 @@ function SignUp() {
       const data = await signUp({ name, email, password });
       if (data?.user?.token) {
         login(data);
+        showAuthAlert({
+          variant: 'success',
+          message: data.message || 'Account created successfully.',
+        });
         navigate(ROUTES.home, { replace: true });
       } else {
         navigate(ROUTES.sign_in, { replace: true });
       }
     } catch (err) {
-      setError(err.message || 'Sign up failed.');
+      const message = err.message || 'Sign up failed.';
+      setError(message);
+      showAuthAlert({ variant: 'danger', message });
+      navigate(ROUTES.home, { replace: true });
     } finally {
       setLoading(false);
     }

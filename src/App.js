@@ -1,4 +1,5 @@
 import { BrowserRouter, useLocation } from 'react-router-dom';
+import { AuthAlertProvider } from './context/AuthAlertContext';
 import { AuthProvider } from './context/AuthContext';
 import { ROUTES } from './config/routes';
 import AppRoutes from './routes/appRoutes';
@@ -28,7 +29,9 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <AppShell />
+        <AuthAlertProvider>
+          <AppShell />
+        </AuthAlertProvider>
       </AuthProvider>
     </BrowserRouter>
   );

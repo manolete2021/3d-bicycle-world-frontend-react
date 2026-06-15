@@ -1,3 +1,4 @@
+import AuthAlert from '../components/AuthAlert';
 import PageLayout from '../components/PageLayout';
 import BicycleSlider3D from '../components/BicycleSlider3D';
 import CategoryCard from '../components/CategoryCard';
@@ -7,6 +8,7 @@ import { bicycleTypes } from '../data/bicycleTypes';
 function Home() {
   return (
     <PageLayout>
+      <AuthAlert />
       <header className="bw-hero bw-hero--home">
         <div className="bw-hero__stage">
           <h1 className="bw-hero__title bw-hero__title--neon">BICYCLES WORLD</h1>

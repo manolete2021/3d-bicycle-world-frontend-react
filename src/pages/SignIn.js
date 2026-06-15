@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
+import AuthAlert from '../components/AuthAlert';
 import { ROUTES } from '../config/routes';
 import { useAuth } from '../context/AuthContext';
+import { useAuthAlert } from '../context/AuthAlertContext';
 import { signIn } from '../services/auth_services';
 
 function BackHomeIcon() {
@@ -23,6 +25,7 @@ function BackHomeIcon() {
 function SignIn() {
   const navigate = useNavigate();
   const { login, isAuthenticated } = useAuth();
+  const { showAuthAlert } = useAuthAlert();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -40,9 +43,15 @@ function SignIn() {
     try {
       const data = await signIn({ email, password });
       login(data);
+      showAuthAlert({
+        variant: 'success',
+        message: data.message || 'Signed in successfully.',
+      });
       navigate(ROUTES.home, { replace: true });
     } catch (err) {
-      setError(err.message || 'Sign in failed.');
+      const message = err.message || 'user or password is incorrect';
+      setError(message);
+      showAuthAlert({ variant: 'danger', message });
     } finally {
       setLoading(false);
     }
@@ -50,6 +59,7 @@ function SignIn() {
 
   return (
     <div className="bw-login-page">
+      <AuthAlert />
       <Link to={ROUTES.home} className="bw-login-page__back" aria-label="Back to home">
         <BackHomeIcon />
       </Link>
