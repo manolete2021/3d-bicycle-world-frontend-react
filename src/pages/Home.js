@@ -14,9 +14,7 @@ function Home() {
           <h1 className="bw-hero__title bw-hero__title--neon">BICYCLES WORLD</h1>
           <BicycleSlider3D />
         </div>
-        <p className="bw-hero__caption">
-          3D Slider / HTML + CSS only, rotating in an infinite loop.
-        </p>
+        
       </header>
 
       <section className="bw-categories" aria-labelledby="categories-heading">
